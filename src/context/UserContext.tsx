@@ -27,8 +27,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<IAuthState>({} as IAuthState);
 
   const locaStorage = async () => {
-    const token = await AsyncStorage.getItem('@ProjectManager:token');
-    const user = await AsyncStorage.getItem('@ProjectManager:user');
+    const token = await AsyncStorage.getItem('@appBarbeiro:token');
+    const user = await AsyncStorage.getItem('@appBarbeiro:user');
 
     if (token && user) {
       setData({ token, user: JSON.parse(user) });
@@ -38,19 +38,22 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
   locaStorage();
 
-  const signInDev = useCallback(async (authCredentials: IAuthCredentials) => {
-    const response = await api.post('/auth', authCredentials);
+  const signInDev = useCallback(
+    async ({ email, password }: IAuthCredentials) => {
+      const response = await api.post('/auth', { email, password });
 
-    const { token, user } = response.data;
+      const { token, user } = response.data;
 
-    AsyncStorage.setItem('@ProjectManager:token', token);
-    AsyncStorage.setItem('@ProjectManager:user', JSON.stringify(user));
+      AsyncStorage.setItem('@appBarbeiro:token', token);
+      AsyncStorage.setItem('@appBarbeiro:token', JSON.stringify(user));
 
-    setData({
-      token,
-      user,
-    });
-  }, []);
+      setData({
+        token,
+        user,
+      });
+    },
+    [],
+  );
 
   return (
     <AuthContext.Provider value={{ signInDev, user: data.user }}>

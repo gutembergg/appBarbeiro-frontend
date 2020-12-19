@@ -14,7 +14,7 @@ const Preload: React.FC = () => {
       const token = await AsyncStorage.getItem('@appBarbeiro:token');
 
       if (token) {
-        //valider
+        navigation.navigate('TabRoutes');
       } else {
         navigation.navigate('SignIn');
       }

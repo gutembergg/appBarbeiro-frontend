@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 
 interface IpropsContainer {
   isFocused: boolean;
@@ -14,14 +14,6 @@ export const Container = styled.View<IpropsContainer>`
   align-items: center;
   padding-left: 15px;
   margin-bottom: 15px;
-
-  ${(props) =>
-    props.isFilled &&
-    css`
-      svg {
-        color: #fff;
-      }
-    `}
 `;
 
 export const InputText = styled.TextInput`

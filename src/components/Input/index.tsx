@@ -4,11 +4,17 @@ import { SvgProps } from 'react-native-svg';
 
 import { Container, InputText } from './styles';
 
-interface IProps {
+interface IFormProps {
   iconSvg: FC<SvgProps>;
+  placeholder: string;
+  onChange: JSX.ElementAttributesProperty;
 }
 
-const Input: React.FC<IProps> = ({ iconSvg: Icon, ...rest }) => {
+const Input: React.FC<IFormProps> = ({
+  iconSvg: Icon,
+  placeholder,
+  ...rest
+}) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
 
@@ -17,13 +23,21 @@ const Input: React.FC<IProps> = ({ iconSvg: Icon, ...rest }) => {
   };
 
   const handleFilled = () => {
+    console.log('Focused');
+
     setIsFilled(true);
   };
 
   return (
     <Container isFilled={isFilled} isFocused={isFocused}>
       <Icon width="24" height="24" fill="#268596" />
-      <InputText {...rest} onFocus={handleFocused} onBlur={handleFilled} />
+      <InputText
+        {...rest.onChange}
+        underlineColorAndroid="transparent"
+        onFocus={handleFocused}
+        onBlur={handleFilled}
+        placeholder={placeholder}
+      />
     </Container>
   );
 };
